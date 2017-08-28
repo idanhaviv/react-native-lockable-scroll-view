@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 class ListViewDemo extends React.Component {
   constructor(props) {
     super(props);
-
+    this._data = ['1', '2', '3'];
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: ds.cloneWithRows(['1', '2', '3']),
@@ -30,7 +30,7 @@ class ListViewDemo extends React.Component {
   }
 
   press() {
-    this._data.concat('4')
+    this._data = this._data.concat(['4'])
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(this._data),
     });
@@ -64,7 +64,7 @@ const getImage = (data) => {
     case '2':
       return <Image
         source={require("./img/2.png")} />
-    case '3':
+    default:
       return <Image
         source={require("./img/3.png")} />
   }
