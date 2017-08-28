@@ -1,7 +1,7 @@
-#import "RNLockedScrollView.h"
+#import "RNLockableScrollView.h"
 #import "RCScrollView.h"
 
-@implementation RNLockedScrollView
+@implementation RNLockableScrollView
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher 
 {
@@ -9,7 +9,7 @@
         UIScrollView *scrollView = [super scrollView];
         //        scrollView.addObserver(self, forKeyPath: "contentSize", options: [.new, .old], context: nil)
 
-        [scrollView addObserver:self forKeyPath:"subviews" options:[NSKeyValueObservingOptionOld, NSKeyValueObservingOptionNew] context: nil];
+        [scrollView addObserver:self forKeyPath:@"subviews" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context: nil];
     }
 
     return nil;
@@ -20,19 +20,19 @@
                         change:(NSDictionary *)change
                        context:(void *)context {
     
-    if (keyPath == "subviews") {
-        [UIView] *oldSubviews = change[NSKeyValueObservingOptionOld];
-        NSLog("oldSubviews %@", oldSubviews);
-
-        [UIView] *newSubviews = change[NSKeyValueObservingOptionNew];
-        NSLog("newSubviews %@", newSubviews);
+    if ([keyPath  isEqual: @"subviews"]) {
+      NSArray *oldSubviews = [change objectForKey:@(NSKeyValueObservingOptionOld)];
+      NSLog(@"oldSubviews %@", oldSubviews);
+      
+      NSArray *newSubviews = [change objectForKey:@(NSKeyValueObservingOptionNew)];
+      NSLog(@"oldSubviews %@", newSubviews);
     }
 }
 
 - (void)scrollTo:(int)x y:(int)y animated:(BOOL)animated {
-    NSLog("scrollTo %@ %@", x, y);
+    NSLog(@"scrollTo %d %d", x, y);
     UIScrollView *scrollView = [super scrollView];
-    [sc setContentOffset:CGPointMake(x, y) animated:animated];
+    [scrollView setContentOffset:CGPointMake(x, y) animated:animated];
 }
 
 //    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
