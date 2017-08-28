@@ -22,22 +22,27 @@ const styles = StyleSheet.create({
 class ListViewDemo extends React.Component {
   constructor(props) {
     super(props);
-    this._data = ['1', '2', '3'];
+    this._data = ['0', '1', '2']
+    this._latestImage = 2
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(['1', '2', '3']),
+      dataSource: ds.cloneWithRows(this._data),
     };
   }
 
   addBelow() {
-    this._data = this._data.concat(['4'])
+    this._latestImage = (this._latestImage + 1) % 3
+    console.log("this._latestImage ", this._latestImage)
+    this._data = this._data.concat([`${this._latestImage}`])
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(this._data),
     });
   }
 
   addOnTop() {
-    this._data = ['4'].concat(this._data)
+    this._latestImage = (this._latestImage + 1) % 3
+    console.log("this._latestImage ", this._latestImage)
+    this._data = [`${this._latestImage}`].concat(this._data)
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(this._data),
     });
@@ -70,12 +75,15 @@ class ListViewDemo extends React.Component {
 
 const getImage = (data) => {
   switch (data) {
-    case '1':
+    case '0':
       return <Image
         source={require("./img/1.png")} />
-    case '2':
+    case '1':
       return <Image
         source={require("./img/2.png")} />
+    case '2':
+      return <Image
+        source={require("./img/3.png")} />
     default:
       return <Image
         source={require("./img/3.png")} />
