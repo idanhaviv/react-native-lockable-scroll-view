@@ -10,7 +10,7 @@
 // } from 'react-native';
 
 import React from 'react';
-import { View, ListView, StyleSheet, Text, AppRegistry, Image } from 'react-native';
+import { View, ListView, StyleSheet, Text, AppRegistry, Image, Button } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,14 +28,30 @@ class ListViewDemo extends React.Component {
       dataSource: ds.cloneWithRows(['1', '2', '3']),
     };
   }
+
+  press() {
+    this._data.concat('4')
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(this._data),
+    });
+  }
   render() {
     return (
-      <ListView
-        style={styles.container}
-        dataSource={this.state.dataSource}
-        renderRow={(data) => getImage(data)
-        }
-      />
+      <View style={{flex:1}}>
+        <Button
+          onPress={() => this.press()}
+          title="Learn More"
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />    
+         <ListView
+          style={styles.container}
+          dataSource={this.state.dataSource}
+          renderRow={(data) => getImage(data)
+          }
+        />
+       
+      </View>
     );
   }
 }
