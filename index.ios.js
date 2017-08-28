@@ -29,21 +29,33 @@ class ListViewDemo extends React.Component {
     };
   }
 
-  press() {
+  addBelow() {
     this._data = this._data.concat(['4'])
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(this._data),
     });
   }
+
+  addOnTop() {
+    this._data = this._data.concat(['4'])
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(this._data),
+    });
+  }
+
   render() {
     return (
       <View style={{flex:1}}>
-        <Button
-          onPress={() => this.press()}
-          title="Learn More"
-          color="#841584"
-          accessibilityLabel="Learn more about this purple button"
-        />    
+        <View style={{flexDirection:"row", paddingTop:30}}>
+          <Button
+            onPress={() => this.addBelow()}
+            title="Add Below"
+          />    
+          <Button
+            onPress={() => this.addOnTop()}
+            title="Add On Top"
+          />    
+        </View>
          <ListView
           style={styles.container}
           dataSource={this.state.dataSource}
