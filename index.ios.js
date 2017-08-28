@@ -1,53 +1,60 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+// import React, { Component } from 'react';
+// import {
+//   ListView,
+//   Text,
+//   TouchableHighlight,
+//   View,
+//   StyleSheet,
+//   ScrollView,
+//   AppRegistry
+// } from 'react-native';
 
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-
-export default class LockableScrollView extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
-  }
-}
+import React from 'react';
+import { View, ListView, StyleSheet, Text, AppRegistry, Image } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    marginTop: 20,
   },
 });
 
-AppRegistry.registerComponent('LockableScrollView', () => LockableScrollView);
+class ListViewDemo extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows(['1', '2', '3']),
+    };
+  }
+  render() {
+    return (
+      <ListView
+        style={styles.container}
+        dataSource={this.state.dataSource}
+        renderRow={(data) => getImage(data)
+        }
+      />
+    );
+  }
+}
+
+const getImage = (data) => {
+  switch (data) {
+    case '1':
+      return <Image
+        source={require("./img/1.png")} />
+    case '2':
+      return <Image
+        source={require("./img/2.png")} />
+    case '3':
+      return <Image
+        source={require("./img/3.png")} />
+  }
+}
+
+export default ListViewDemo;
+
+
+AppRegistry.registerComponent('LockableScrollView', () => ListViewDemo);
