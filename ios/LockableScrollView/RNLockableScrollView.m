@@ -3,6 +3,8 @@
 
 @implementation RNLockableScrollView
 
+@dynamic scrollView;
+
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher 
 {
     if (self = [super initWithEventDispatcher:eventDispatcher]) {
@@ -10,6 +12,7 @@
         //        scrollView.addObserver(self, forKeyPath: "contentSize", options: [.new, .old], context: nil)
 
         [scrollView addObserver:self forKeyPath:@"subviews" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context: nil];
+        return self;
     }
 
     return nil;
