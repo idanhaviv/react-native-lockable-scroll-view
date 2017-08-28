@@ -37,7 +37,7 @@ class ListViewDemo extends React.Component {
   }
 
   addOnTop() {
-    this._data = this._data.concat(['4'])
+    this._data = ['4'].concat(this._data)
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(this._data),
     });
