@@ -1,17 +1,7 @@
-// import React, { Component } from 'react';
-// import {
-//   ListView,
-//   Text,
-//   TouchableHighlight,
-//   View,
-//   StyleSheet,
-//   ScrollView,
-//   AppRegistry
-// } from 'react-native';
-
 import React from 'react';
 import { View, ListView, StyleSheet, Text, AppRegistry, Image, Button } from 'react-native';
-
+import LockScrollView from './LockScrollView';
+ 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -62,6 +52,7 @@ class ListViewDemo extends React.Component {
           />    
         </View>
          <ListView
+         renderScrollComponent={props => <LockScrollView {...props} />}
           style={styles.container}
           dataSource={this.state.dataSource}
           renderRow={(data) => getImage(data)
