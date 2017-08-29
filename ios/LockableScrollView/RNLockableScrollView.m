@@ -1,38 +1,91 @@
 #import "RNLockableScrollView.h"
 #import <React/UIView+React.h>
-//@interface RNLockableScrollView : RCTScrollView
-//
-////@property (nonatomic, readonly) UIScrollView *scrollView;
-////@dynamic scrollView;
-//- (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher NS_DESIGNATED_INITIALIZER;
-//- (void)scrollTo:(int)x y:(int)y animated:(BOOL)animated;
-//
-//@end
+#import <React/RCTUIManager.h>
+#import <React/RCTBridge.h>
+
+@interface RNLockableScrollView()
+
+@property (nonatomic) NSArray *currentSubviews;
+
+@end
 
 @implementation RNLockableScrollView
 
 @dynamic scrollView;
 
+- (void)scrollToOffsetX:(CGFloat)x offsetY:(CGFloat)y animated:(BOOL)animated
+{
+  UIScrollView *scrollView = [super scrollView];
+  [scrollView setContentOffset:CGPointMake(x, y) animated:animated];
+}
+
 - (void)insertReactSubview:(UIView *)view atIndex:(NSInteger)atIndex
 {
   [super insertReactSubview:view atIndex:atIndex];
+  //TODO: check if not called more than once; if so, make sure you register the observer once
+  
   UIScrollView *scrollView = [super scrollView];
   UIView *contentView = [scrollView subviews][0];
   [contentView addObserver:self forKeyPath:@"layer.sublayers" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context: nil];
+}
+
+- (CGFloat)requiredScrollUpdateForAddedSubview:(UIView *)addedView {
+  
+    BOOL viewExceedsTopViewPort = addedView.frame.origin.y < [super scrollView].contentOffset.y;
+    BOOL viewIsAddedToTopOfNonScrolledList = [super scrollView].subviews.count > 3 && addedView.frame.origin.y == 0; //2 subviews are the scrolling indicators
+    if  (viewExceedsTopViewPort || viewIsAddedToTopOfNonScrolledList) {
+      return addedView.frame.size.height;
+    }
+  
+  return 0;
+}
+
+- (void)handleAddedSubview:(UIView *)subview {
+  CGFloat verticalOffset = [self requiredScrollUpdateForAddedSubview:subview];
+  if (verticalOffset > 0) {
+    [self scrollTo:[super scrollView].contentOffset.x y:[super scrollView].contentOffset.y animated:NO];
+  }
+}
+
+- (void)handleRemovedSubview:(UIView *)subview {
+  if (subview.frame.origin.y < [super scrollView].contentOffset.y - 0.0001) {
+    [self scrollTo:[super scrollView].contentOffset.x y:([super scrollView].contentOffset.y - subview.frame.size.height) animated:NO];
+  }
+
+}
+
+- (UIView *)extractDiffWithPartialList:(NSArray *)partialList completeList:(NSArray *)completeList {
+  for (UIView *view in completeList) {
+    if (![partialList containsObject:view]) {
+      return view;
+    }
+  }
+  
+  return nil;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {
-    NSLog(@"observeValueForKeyPath %@ with change %@", keyPath, change);
-    if ([keyPath  isEqual: @"subviews"]) {
-      NSArray *oldSubviews = [change objectForKey:@(NSKeyValueObservingOptionOld)];
-      NSLog(@"oldSubviews %@", oldSubviews);
-      
-      NSArray *newSubviews = [change objectForKey:@(NSKeyValueObservingOptionNew)];
-      NSLog(@"oldSubviews %@", newSubviews);
-    }
+  if (![keyPath  isEqual: @"layer.sublayers"] || ![object isKindOfClass:[UIView class]]) {
+    return;
+  }
+  //TODO: make sure it's called for any number of added elements
+  UIView *contentView = (UIView *)object;
+  if ([[self currentSubviews] count] == contentView.subviews.count) {
+    return;
+  }
+  
+  if ([[self currentSubviews] count] > contentView.subviews.count) {
+    UIView *diffSubView = [self extractDiffWithPartialList:contentView.subviews completeList:[self currentSubviews]];
+    [self handleRemovedSubview: diffSubView];
+  } else if ([[self currentSubviews] count] < contentView.subviews.count) {
+    UIView *diffSubView = [self extractDiffWithPartialList:[self currentSubviews] completeList:contentView.subviews];
+    [self handleAddedSubview: diffSubView];
+  }
+  
+  [self setCurrentSubviews:contentView.subviews];
 }
 
 - (void)scrollTo:(int)x y:(int)y animated:(BOOL)animated {
@@ -40,27 +93,5 @@
     UIScrollView *scrollView = [super scrollView];
     [scrollView setContentOffset:CGPointMake(x, y) animated:animated];
 }
-
-- (void)didAddSubview:(UIView *)subview {
-  NSLog(@"scrollTo %@", subview);
-}
-
-//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-//        if keyPath == "contentSize" {
-//            let old = change![.oldKey]
-//            print("old value \(old!)")
-//
-//            let new = change![.newKey]
-//            print("new value \(new!)")
-//            print("1contentOffset \(scrollView.contentOffset) contentSize \(scrollView.contentSize)")
-//            if old as! CGSize != new as! CGSize {
-//                scrollToLastPosition()
-//            }
-//        }
-//
-////        if keyPath == "contentOffset" {
-////            lastScrollPosition = scrollView.contentOffset.y
-////        }
-//    }
 
 @end

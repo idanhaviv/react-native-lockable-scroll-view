@@ -3,9 +3,15 @@
 //#import <React/RCTScrollContentViewManager.h>
 #import "RNLockableScrollViewManager.h"
 #import "RNLockableScrollView.h"
+#import <React/RCTUIManager.h>
+#import <React/RCTBridge.h>
+//#import <React/RCTBridge.h>
+//#import "RCTScrollView.h"
+//#import "RCTShadowView.h"
+//#import "RCTUIManager.h"
 // #import <UIKit/UIKit.h>
 
-#import <React/RCTBridge.h>
+
 // @interface RCTLockableScrollViewManager : RCTViewManager
 // @end
 
@@ -19,7 +25,5 @@ RCT_EXPORT_MODULE()
 {
   return [[RNLockableScrollView alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
 }
-
-
 
 @end
