@@ -29,6 +29,12 @@
   [contentView addObserver:self forKeyPath:@"layer.sublayers" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context: nil];
 }
 
+- (void)dealloc {
+  UIScrollView *scrollView = [super scrollView];
+  UIView *contentView = [scrollView subviews][0];
+  [contentView removeObserver:self forKeyPath:@"layer.sublayers"];
+}
+
 - (CGFloat)requiredScrollUpdateForAddedSubview:(UIView *)addedView {
   
     BOOL viewExceedsTopViewPort = addedView.frame.origin.y < [super scrollView].contentOffset.y;
@@ -93,5 +99,4 @@
     UIScrollView *scrollView = [super scrollView];
     [scrollView setContentOffset:CGPointMake(x, y) animated:animated];
 }
-
 @end
