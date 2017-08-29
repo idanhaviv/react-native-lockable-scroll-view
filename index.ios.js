@@ -37,6 +37,14 @@ class ListViewDemo extends React.Component {
       dataSource: this.state.dataSource.cloneWithRows(this._data),
     });
   }
+  
+  resetState() {
+    this._data = ['0', '1', '2']
+    this._latestImage = 2
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(this._data),
+    });
+  }
 
   render() {
     return (
@@ -49,6 +57,10 @@ class ListViewDemo extends React.Component {
           <Button
             onPress={() => this.addOnTop()}
             title="Add On Top"
+          /> 
+          <Button
+            onPress={() => this.resetState()}
+            title="Reset State"
           />    
         </View>
          <ListView
