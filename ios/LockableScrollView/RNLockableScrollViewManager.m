@@ -26,4 +26,18 @@ RCT_EXPORT_MODULE()
   return [[RNLockableScrollView alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
 }
 
+RCT_EXPORT_METHOD(lockBottomScrollOffset:(nonnull NSNumber *)reactTag) {
+  [self.bridge.uiManager addUIBlock:
+   ^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, RNLockableScrollView *> *viewRegistry) {
+     
+     RNLockableScrollView *view = viewRegistry[reactTag];
+     if (!view || ![view isKindOfClass:[RNLockableScrollView class]]) {
+       RCTLogError(@"Cannot find RNLockableScrollView with tag #%@", reactTag);
+       return;
+     }
+     
+     [view lockBottomScrollOffset];
+   }];
+}
+
 @end

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactNative, { requireNativeComponent, View, UIManager, ScrollView, Platform } from 'react-native';
+import ReactNative, { findNodeHandle, requireNativeComponent, View, UIManager, ScrollView, Platform } from 'react-native';
 import ScrollResponder from 'react-native/Libraries/Components/ScrollResponder';
 
 class LockedScrollView extends React.Component {
@@ -35,6 +35,13 @@ class LockedScrollView extends React.Component {
   _scrollViewRef = null
   _setScrollViewRef(ref) {
     this._scrollViewRef = ref;
+  }
+  lockBottomScrollOffset() {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this),
+      UIManager.RNLockableScrollView.Commands.lockBottomScrollOffset,
+      []
+    );
   }
   render() {
     return (

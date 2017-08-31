@@ -2,16 +2,50 @@
 #import <React/UIView+React.h>
 #import <React/RCTUIManager.h>
 #import <React/RCTBridge.h>
+#import <React/RCTScrollView.h>
 
 @interface RNLockableScrollView()
 
 @property (nonatomic) NSArray *currentSubviews;
+@property (nonatomic) UIView *firstView;
 
 @end
 
-@implementation RNLockableScrollView
+@interface RCTScrollView ()
+
+- (CGPoint)calculateOffsetForContentSize:(CGSize)newContentSize;
+
+@end
+
+@implementation RNLockableScrollView {
+  BOOL _isLocked;
+}
 
 @dynamic scrollView;
+
+- (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher {
+  _isLocked = NO;
+  return [super initWithEventDispatcher:eventDispatcher];
+}
+
+- (void)lockBottomScrollOffset {
+  _isLocked = YES;
+}
+
+- (CGPoint)calculateOffsetForContentSize:(CGSize)newContentSize {
+  NSLog(@"size changed");
+  if (!_isLocked) {
+    return [super calculateOffsetForContentSize:newContentSize];
+  } else {
+    _isLocked = NO;
+    
+    CGPoint oldContentOffset = self.scrollView.contentOffset;
+    CGSize oldContentSize = self.scrollView.contentSize;
+    float heightDifference = newContentSize.height - oldContentSize.height;
+    
+    return CGPointMake(oldContentOffset.x, oldContentOffset.y + heightDifference);
+  }
+}
 
 - (void)scrollToOffsetX:(CGFloat)x offsetY:(CGFloat)y animated:(BOOL)animated
 {
@@ -47,7 +81,15 @@
 }
 
 - (void)handleAddedSubview:(UIView *)subview {
+//  if (_firstView == nil) {
+//    _firstView = subview;
+//  }
+//  
+//  NSLog(@"_firstView = %@", _firstView);
+  
   CGFloat verticalOffset = [self requiredScrollUpdateForAddedSubview:subview];
+//  UIScrollView *sv = [super scrollView];
+////  sv.contentOffset = CGPointMake(sv.contentOffset.x, 160);
   if (verticalOffset > 0) {
     [self scrollTo:[super scrollView].contentOffset.x y:[super scrollView].contentOffset.y animated:NO];
   }
@@ -87,10 +129,12 @@
     UIView *diffSubView = [self extractDiffWithPartialList:contentView.subviews completeList:[self currentSubviews]];
     [self handleRemovedSubview: diffSubView];
   } else if ([[self currentSubviews] count] < contentView.subviews.count) {
+//    CGPoint offset = [super calculateOffsetForContentSize:CGSizeMake(0, 0)];
     UIView *diffSubView = [self extractDiffWithPartialList:[self currentSubviews] completeList:contentView.subviews];
     [self handleAddedSubview: diffSubView];
   }
   
+  NSLog(@"contentView.subviews = %@", contentView.subviews);
   [self setCurrentSubviews:contentView.subviews];
 }
 

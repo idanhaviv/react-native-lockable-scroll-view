@@ -22,8 +22,8 @@ class ListViewDemo extends React.Component {
 
   addBelow() {
     this._latestImage = (this._latestImage + 1) % 3
-    console.log("this._latestImage ", this._latestImage)
     this._data = this._data.concat([`${this._latestImage}`])
+    
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(this._data),
     });
@@ -31,8 +31,8 @@ class ListViewDemo extends React.Component {
 
   addOnTop() {
     this._latestImage = (this._latestImage + 1) % 3
-    console.log("this._latestImage ", this._latestImage)
     this._data = [`${this._latestImage}`].concat(this._data)
+    this.scrollView.lockBottomScrollOffset()
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(this._data),
     });
@@ -64,7 +64,11 @@ class ListViewDemo extends React.Component {
           />    
         </View>
          <ListView
-         renderScrollComponent={props => <LockScrollView {...props} />}
+         renderScrollComponent={props => <LockScrollView 
+            ref={scrollView => {
+              this.scrollView = scrollView
+              }}
+            {...props} />}
           style={styles.container}
           dataSource={this.state.dataSource}
           renderRow={(data) => getImage(data)
