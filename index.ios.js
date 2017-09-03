@@ -35,6 +35,18 @@ class ListViewDemo extends React.Component {
       data: [{img: `${this._latestImage}`, key: uuid()}].concat(this.state.data)
     });
   }
+
+  removeBelow() {
+    this.setState({
+      data: this.state.data.slice(0, this.state.data.length - 1)
+    });
+  }
+
+  removeOnTop() {
+    this.setState({
+      data: this.state.data.slice(1, this.state.data.length)
+    });
+  }
   
   resetState() {
     this._latestImage = 2
@@ -79,6 +91,14 @@ class ListViewDemo extends React.Component {
           <Button
             onPress={() => this.addOnTop()}
             title="Add On Top"
+          /> 
+          <Button
+            onPress={() => this.removeBelow()}
+            title="Remove Below"
+          />    
+          <Button
+            onPress={() => this.removeOnTop()}
+            title="Remove On Top"
           /> 
           <Button
             onPress={() => this.resetState()}
