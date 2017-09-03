@@ -36,13 +36,6 @@ class LockedScrollView extends React.Component {
   _setScrollViewRef(ref) {
     this._scrollViewRef = ref;
   }
-  lockBottomScrollOffset() {
-    UIManager.dispatchViewManagerCommand(
-      findNodeHandle(this),
-      UIManager.RNLockableScrollView.Commands.lockBottomScrollOffset,
-      []
-    );
-  }
   render() {
     return (
       <RCTLockedScrollView

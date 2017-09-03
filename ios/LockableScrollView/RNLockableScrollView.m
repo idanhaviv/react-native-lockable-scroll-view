@@ -11,41 +11,9 @@
 
 @end
 
-@interface RCTScrollView ()
-
-- (CGPoint)calculateOffsetForContentSize:(CGSize)newContentSize;
-
-@end
-
-@implementation RNLockableScrollView {
-  BOOL _isLocked;
-}
+@implementation RNLockableScrollView
 
 @dynamic scrollView;
-
-- (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher {
-  _isLocked = NO;
-  return [super initWithEventDispatcher:eventDispatcher];
-}
-
-- (void)lockBottomScrollOffset {
-  _isLocked = YES;
-}
-
-- (CGPoint)calculateOffsetForContentSize:(CGSize)newContentSize {
-  NSLog(@"size changed");
-  if (!_isLocked) {
-    return [super calculateOffsetForContentSize:newContentSize];
-  } else {
-    _isLocked = NO;
-    
-    CGPoint oldContentOffset = self.scrollView.contentOffset;
-    CGSize oldContentSize = self.scrollView.contentSize;
-    float heightDifference = newContentSize.height - oldContentSize.height;
-    
-    return CGPointMake(oldContentOffset.x, oldContentOffset.y + heightDifference);
-  }
-}
 
 - (void)scrollToOffsetX:(CGFloat)x offsetY:(CGFloat)y animated:(BOOL)animated
 {
@@ -72,7 +40,7 @@
 - (CGFloat)requiredScrollUpdateForAddedSubview:(UIView *)addedView {
   
     BOOL viewExceedsTopViewPort = addedView.frame.origin.y < [super scrollView].contentOffset.y;
-    BOOL viewIsAddedToTopOfNonScrolledList = [super scrollView].subviews.count > 3 && addedView.frame.origin.y == 0; //2 subviews are the scrolling indicators
+    BOOL viewIsAddedToTopOfNonScrolledList = [super scrollView].subviews[0].subviews.count > 1 && addedView.frame.origin.y == 0; //2 subviews are the scrolling indicators; irrelevant for the scrollView's contentView's subviews
     if  (viewExceedsTopViewPort || viewIsAddedToTopOfNonScrolledList) {
       return addedView.frame.size.height;
     }
@@ -81,17 +49,9 @@
 }
 
 - (void)handleAddedSubview:(UIView *)subview {
-//  if (_firstView == nil) {
-//    _firstView = subview;
-//  }
-//  
-//  NSLog(@"_firstView = %@", _firstView);
-  
   CGFloat verticalOffset = [self requiredScrollUpdateForAddedSubview:subview];
-//  UIScrollView *sv = [super scrollView];
-////  sv.contentOffset = CGPointMake(sv.contentOffset.x, 160);
   if (verticalOffset > 0) {
-    [self scrollTo:[super scrollView].contentOffset.x y:[super scrollView].contentOffset.y animated:NO];
+    [self scrollTo:[super scrollView].contentOffset.x y:[super scrollView].contentOffset.y + verticalOffset animated:NO];
   }
 }
 
@@ -103,8 +63,13 @@
 }
 
 - (UIView *)extractDiffWithPartialList:(NSArray *)partialList completeList:(NSArray *)completeList {
+  NSMutableArray *partialListTags = [NSMutableArray new];
+  for (UIView *view in partialList) {
+    [partialListTags addObject:view.reactTag];
+  }
+  
   for (UIView *view in completeList) {
-    if (![partialList containsObject:view]) {
+    if (![partialListTags containsObject:view.reactTag]) {
       return view;
     }
   }
@@ -119,7 +84,7 @@
   if (![keyPath  isEqual: @"layer.sublayers"] || ![object isKindOfClass:[UIView class]]) {
     return;
   }
-  //TODO: make sure it's called for any number of added elements
+  
   UIView *contentView = (UIView *)object;
   if ([[self currentSubviews] count] == contentView.subviews.count) {
     return;
@@ -129,12 +94,11 @@
     UIView *diffSubView = [self extractDiffWithPartialList:contentView.subviews completeList:[self currentSubviews]];
     [self handleRemovedSubview: diffSubView];
   } else if ([[self currentSubviews] count] < contentView.subviews.count) {
-//    CGPoint offset = [super calculateOffsetForContentSize:CGSizeMake(0, 0)];
     UIView *diffSubView = [self extractDiffWithPartialList:[self currentSubviews] completeList:contentView.subviews];
     [self handleAddedSubview: diffSubView];
   }
   
-  NSLog(@"contentView.subviews = %@", contentView.subviews);
+//  NSLog(@"contentView.subviews = %@", contentView.subviews);
   [self setCurrentSubviews:contentView.subviews];
 }
 
