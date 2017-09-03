@@ -51,7 +51,7 @@ class ListViewDemo extends React.Component {
   resetState() {
     this._latestImage = 2
     this.setState({
-      data: this.state.data.cloneWithRows(initialData()),
+      data: initialData()
     });
   }
   _keyExtractor = (item, index) => {
