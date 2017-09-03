@@ -63,19 +63,15 @@ class ListViewDemo extends React.Component {
     switch (item.img) {
       case '0':
         return <Image
-          key={uuid()}
           source={require("./img/1.png")} />
       case '1':
         return <Image
-          key={uuid()}
           source={require("./img/2.png")} />
       case '2':
         return <Image
-          key={uuid()}
           source={require("./img/3.png")} />
       default:
         return <Image
-          key={uuid()}
           source={require("./img/3.png")} />
     }
   }

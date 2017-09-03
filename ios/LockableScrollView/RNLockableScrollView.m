@@ -7,19 +7,10 @@
 @interface RNLockableScrollView()
 
 @property (nonatomic) NSArray *currentSubviews;
-@property (nonatomic) UIView *firstView;
 
 @end
 
 @implementation RNLockableScrollView
-
-@dynamic scrollView;
-
-- (void)scrollToOffsetX:(CGFloat)x offsetY:(CGFloat)y animated:(BOOL)animated
-{
-  UIScrollView *scrollView = [super scrollView];
-  [scrollView setContentOffset:CGPointMake(x, y) animated:animated];
-}
 
 - (void)insertReactSubview:(UIView *)view atIndex:(NSInteger)atIndex
 {
