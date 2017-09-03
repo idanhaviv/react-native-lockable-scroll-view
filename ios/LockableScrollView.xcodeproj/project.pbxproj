@@ -36,7 +36,6 @@
 		2DCD954D1E0B4F2C00145EB5 /* LockableScrollViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* LockableScrollViewTests.m */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		EEDE334C1F543C4700D587B3 /* RCScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDE33471F543C4700D587B3 /* RCScrollView.m */; };
 		EEDE334D1F543C4700D587B3 /* RNLockableScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDE33491F543C4700D587B3 /* RNLockableScrollView.m */; };
 		EEDE334E1F543C4700D587B3 /* RNLockableScrollViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDE334B1F543C4700D587B3 /* RNLockableScrollViewManager.m */; };
 /* End PBXBuildFile section */
@@ -286,8 +285,6 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		EEDE33461F543C4700D587B3 /* RCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCScrollView.h; path = LockableScrollView/RCScrollView.h; sourceTree = "<group>"; };
-		EEDE33471F543C4700D587B3 /* RCScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCScrollView.m; path = LockableScrollView/RCScrollView.m; sourceTree = "<group>"; };
 		EEDE33481F543C4700D587B3 /* RNLockableScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNLockableScrollView.h; path = LockableScrollView/RNLockableScrollView.h; sourceTree = "<group>"; };
 		EEDE33491F543C4700D587B3 /* RNLockableScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNLockableScrollView.m; path = LockableScrollView/RNLockableScrollView.m; sourceTree = "<group>"; };
 		EEDE334A1F543C4700D587B3 /* RNLockableScrollViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNLockableScrollViewManager.h; path = LockableScrollView/RNLockableScrollViewManager.h; sourceTree = "<group>"; };
@@ -426,8 +423,6 @@
 		13B07FAE1A68108700A75B9A /* LockableScrollView */ = {
 			isa = PBXGroup;
 			children = (
-				EEDE33461F543C4700D587B3 /* RCScrollView.h */,
-				EEDE33471F543C4700D587B3 /* RCScrollView.m */,
 				EEDE33481F543C4700D587B3 /* RNLockableScrollView.h */,
 				EEDE33491F543C4700D587B3 /* RNLockableScrollView.m */,
 				EEDE334A1F543C4700D587B3 /* RNLockableScrollViewManager.h */,
@@ -985,7 +980,6 @@
 			files = (
 				EEDE334E1F543C4700D587B3 /* RNLockableScrollViewManager.m in Sources */,
 				EEDE334D1F543C4700D587B3 /* RNLockableScrollView.m in Sources */,
-				EEDE334C1F543C4700D587B3 /* RCScrollView.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
