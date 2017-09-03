@@ -39,8 +39,6 @@
 		EEDE334C1F543C4700D587B3 /* RCScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDE33471F543C4700D587B3 /* RCScrollView.m */; };
 		EEDE334D1F543C4700D587B3 /* RNLockableScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDE33491F543C4700D587B3 /* RNLockableScrollView.m */; };
 		EEDE334E1F543C4700D587B3 /* RNLockableScrollViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDE334B1F543C4700D587B3 /* RNLockableScrollViewManager.m */; };
-		EEDE33541F58461800D587B3 /* TWLockableScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDE33511F58461800D587B3 /* TWLockableScrollView.m */; };
-		EEDE33551F58461800D587B3 /* TWLockableScrollViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDE33531F58461800D587B3 /* TWLockableScrollViewManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -294,10 +292,6 @@
 		EEDE33491F543C4700D587B3 /* RNLockableScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNLockableScrollView.m; path = LockableScrollView/RNLockableScrollView.m; sourceTree = "<group>"; };
 		EEDE334A1F543C4700D587B3 /* RNLockableScrollViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNLockableScrollViewManager.h; path = LockableScrollView/RNLockableScrollViewManager.h; sourceTree = "<group>"; };
 		EEDE334B1F543C4700D587B3 /* RNLockableScrollViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNLockableScrollViewManager.m; path = LockableScrollView/RNLockableScrollViewManager.m; sourceTree = "<group>"; };
-		EEDE33501F58461800D587B3 /* TWLockableScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWLockableScrollView.h; sourceTree = "<group>"; };
-		EEDE33511F58461800D587B3 /* TWLockableScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWLockableScrollView.m; sourceTree = "<group>"; };
-		EEDE33521F58461800D587B3 /* TWLockableScrollViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWLockableScrollViewManager.h; sourceTree = "<group>"; };
-		EEDE33531F58461800D587B3 /* TWLockableScrollViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWLockableScrollViewManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -434,10 +428,6 @@
 			children = (
 				EEDE33461F543C4700D587B3 /* RCScrollView.h */,
 				EEDE33471F543C4700D587B3 /* RCScrollView.m */,
-				EEDE33501F58461800D587B3 /* TWLockableScrollView.h */,
-				EEDE33511F58461800D587B3 /* TWLockableScrollView.m */,
-				EEDE33521F58461800D587B3 /* TWLockableScrollViewManager.h */,
-				EEDE33531F58461800D587B3 /* TWLockableScrollViewManager.m */,
 				EEDE33481F543C4700D587B3 /* RNLockableScrollView.h */,
 				EEDE33491F543C4700D587B3 /* RNLockableScrollView.m */,
 				EEDE334A1F543C4700D587B3 /* RNLockableScrollViewManager.h */,
@@ -993,9 +983,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEDE33551F58461800D587B3 /* TWLockableScrollViewManager.m in Sources */,
 				EEDE334E1F543C4700D587B3 /* RNLockableScrollViewManager.m in Sources */,
-				EEDE33541F58461800D587B3 /* TWLockableScrollView.m in Sources */,
 				EEDE334D1F543C4700D587B3 /* RNLockableScrollView.m in Sources */,
 				EEDE334C1F543C4700D587B3 /* RCScrollView.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,

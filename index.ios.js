@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, ListView, StyleSheet, Text, AppRegistry, Image, Button } from 'react-native';
+import { View, FlatList, StyleSheet, Text, AppRegistry, Image, Button } from 'react-native';
 import LockScrollView from './LockScrollView';
- 
+ import uuid from 'uuid';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -12,38 +13,57 @@ const styles = StyleSheet.create({
 class ListViewDemo extends React.Component {
   constructor(props) {
     super(props);
-    this._data = ['0', '1', '2']
     this._latestImage = 2
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(this._data),
+      data: [{id: '0'},{id: '1'},{id: '2'}]
     };
   }
 
   addBelow() {
     this._latestImage = (this._latestImage + 1) % 3
-    this._data = this._data.concat([`${this._latestImage}`])
-    
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(this._data),
+      data: this.state.data.concat([{id:`${this._latestImage}`}])
     });
   }
 
   addOnTop() {
     this._latestImage = (this._latestImage + 1) % 3
-    this._data = [`${this._latestImage}`].concat(this._data)
-    this.scrollView.lockBottomScrollOffset()
+    this._data = [{id:`${this._latestImage}`}].concat(this._data)
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(this._data),
+      data: [`${this._latestImage}`].concat(this.state.data)
     });
   }
   
   resetState() {
-    this._data = ['0', '1', '2']
     this._latestImage = 2
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(this._data),
+      data: this.state.data.cloneWithRows([{id: '0'},{id: '1'},{id: '2'}]),
     });
+  }
+
+  _keyExtractor = (item, index) => {
+    console.log("extract index ", item.id)
+    return item.id;
+  }
+
+  _renderItem = ({item}) => {
+    switch (item.id) {
+      case '0':
+        return <Image
+          id={uuid()}
+          source={require("./img/1.png")} />
+      case '1':
+        return <Image
+          id={uuid()}
+          source={require("./img/2.png")} />
+      case '2':
+        return <Image
+          id={uuid()}
+          source={require("./img/3.png")} />
+      default:
+        return <Image
+          source={require("./img/3.png")} />
+    }
   }
 
   render() {
@@ -63,18 +83,13 @@ class ListViewDemo extends React.Component {
             title="Reset State"
           />    
         </View>
-         <ListView
-         renderScrollComponent={props => <LockScrollView 
-            ref={scrollView => {
-              this.scrollView = scrollView
-              }}
-            {...props} />}
+        <FlatList
+          data={this.state.data}
+          keyExtractor={this._keyExtractor}
+          renderItem={this._renderItem}
+          renderScrollComponent={props => <LockScrollView {...props} />}
           style={styles.container}
-          dataSource={this.state.dataSource}
-          renderRow={(data) => getImage(data)
-          }
         />
-       
       </View>
     );
   }
@@ -84,12 +99,15 @@ const getImage = (data) => {
   switch (data) {
     case '0':
       return <Image
+        id={uuid()}
         source={require("./img/1.png")} />
     case '1':
       return <Image
+        id={uuid()}
         source={require("./img/2.png")} />
     case '2':
       return <Image
+        id={uuid()}
         source={require("./img/3.png")} />
     default:
       return <Image
