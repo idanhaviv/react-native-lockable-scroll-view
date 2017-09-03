@@ -55,7 +55,6 @@ class ListViewDemo extends React.Component {
     });
   }
   _keyExtractor = (item, index) => {
-    console.log("extract index ", item.key)
     return item.key;
   }
 
