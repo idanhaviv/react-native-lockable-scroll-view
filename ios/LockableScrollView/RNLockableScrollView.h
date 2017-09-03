@@ -3,4 +3,6 @@
 
 @interface RNLockableScrollView : RCTScrollView
 
+@property (nonatomic) BOOL enabled;
+
 @end

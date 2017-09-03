@@ -104,7 +104,7 @@ class ListViewDemo extends React.Component {
           data={this.state.data}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
-          renderScrollComponent={props => <LockScrollView {...props} />}
+          renderScrollComponent={props => <LockScrollView enabled={true} {...props}/>}
           style={styles.container}
         />
       </View>

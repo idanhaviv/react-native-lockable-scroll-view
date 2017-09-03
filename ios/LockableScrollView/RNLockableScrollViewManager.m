@@ -6,6 +6,7 @@
 @implementation RNLockableScrollViewManager
 
 RCT_EXPORT_MODULE()
+RCT_EXPORT_VIEW_PROPERTY(enabled, BOOL)
 
 - (UIView *)view
 {

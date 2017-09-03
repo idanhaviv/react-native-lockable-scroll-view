@@ -16,10 +16,11 @@
 {
   [super insertReactSubview:view atIndex:atIndex];
   //TODO: check if not called more than once; if so, make sure you register the observer once
-  
-  UIScrollView *scrollView = [super scrollView];
-  UIView *contentView = [scrollView subviews][0];
-  [contentView addObserver:self forKeyPath:@"layer.sublayers" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context: nil];
+  if ([self enabled]) {
+    UIScrollView *scrollView = [super scrollView];
+    UIView *contentView = [scrollView subviews][0];
+    [contentView addObserver:self forKeyPath:@"layer.sublayers" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew context: nil];
+  }
 }
 
 - (void)dealloc {
