@@ -86,23 +86,23 @@ class ListViewDemo extends React.Component {
         <View style={{flexDirection:"row", paddingTop:30}}>
           <Button
             onPress={() => this.addBelow()}
-            title="Add Below"
+            title="+Below"
           />    
           <Button
             onPress={() => this.addOnTop()}
-            title="Add On Top"
+            title="+Top"
           /> 
           <Button
             onPress={() => this.removeBelow()}
-            title="Remove Below"
+            title="-Below"
           />    
           <Button
             onPress={() => this.removeOnTop()}
-            title="Remove On Top"
+            title="-Top"
           /> 
           <Button
             onPress={() => this.resetState()}
-            title="Reset State"
+            title="Reset"
           />    
         </View>
         <FlatList
