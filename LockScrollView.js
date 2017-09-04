@@ -5,9 +5,6 @@ import ScrollResponder from 'react-native/Libraries/Components/ScrollResponder';
 
 class LockedScrollView extends React.Component {
   mixins: [ScrollResponder.Mixin]
-  // getInitialState() {
-  //   return this.scrollResponderMixinGetInitialState();
-  // }
   setNativeProps(props) {
     this._scrollViewRef && this._scrollViewRef.setNativeProps(props);
   }
