@@ -1,16 +1,16 @@
-#import "RNLockableScrollView.h"
+#import "RCTLockableScrollView.h"
 #import <React/UIView+React.h>
 #import <React/RCTUIManager.h>
 #import <React/RCTBridge.h>
 #import <React/RCTScrollView.h>
 
-@interface RNLockableScrollView()
+@interface RCTLockableScrollView()
 
 @property (nonatomic) NSArray *currentSubviews;
 
 @end
 
-@implementation RNLockableScrollView
+@implementation RCTLockableScrollView
 
 - (void)insertReactSubview:(UIView *)view atIndex:(NSInteger)atIndex
 {

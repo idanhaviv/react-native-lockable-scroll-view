@@ -1,7 +1,7 @@
 #import <React/RCTScrollView.h>
 #import <React/RCTBridge.h>
 
-@interface RNLockableScrollView : RCTScrollView
+@interface RCTLockableScrollView : RCTScrollView
 
 @property (nonatomic) BOOL enabled;
 

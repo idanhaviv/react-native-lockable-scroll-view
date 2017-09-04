@@ -21,7 +21,7 @@ class LockedScrollView extends React.Component {
     if (Platform.OS === 'ios'){
       UIManager.dispatchViewManagerCommand(
         this.getScrollableNode(),
-        UIManager.RNLockableScrollView.Commands.scrollTo,
+        UIManager.RCTLockableScrollView.Commands.scrollTo,
         [x || 0, y || 0, animated !== false],
       );
     } else {
@@ -68,6 +68,6 @@ LockedScrollView.propTypes = {
     enabled: PropTypes.bool
 }
 
-var RCTLockedScrollView = requireNativeComponent('RNLockableScrollView', LockedScrollView)
+var RCTLockedScrollView = requireNativeComponent('RCTLockableScrollView', LockedScrollView)
 
 export default LockedScrollView;
